@@ -1,5 +1,9 @@
 # GAN (Generative adversarial network)
 
+# Install Requirements
+
+pip install -r requirements.txt
+
 # Create a directory for the dataset
 mkdir -p stanford_dogs
 
