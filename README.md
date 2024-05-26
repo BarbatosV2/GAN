@@ -1,25 +1,26 @@
 # GAN (Generative adversarial network)
 
 # Install Requirements
-**pip install -r requirements.txt**
-
+```
+pip install -r requirements.txt
+```
 # Create a directory for the dataset
-**mkdir -p stanford_dogs**
-
-**cd stanford_dogs**
+```
+mkdir -p stanford_dogs
+cd stanford_dogs
+```
 
 # Download the dataset
 Depends on what dataset u want to train. For me, I am training dog dataset.
-
+```
 wget http://vision.stanford.edu/aditya86/ImageNetDogs/images.tar
-
 wget http://vision.stanford.edu/aditya86/ImageNetDogs/annotation.tar
-
+```
 # Extract the images
+```
 tar -xvf images.tar
-
 tar -xvf annotation.tar
-
+```
 # Read Me
 
 This GAN model use GPU which save the RAM usage and train data faster than CPU training.
