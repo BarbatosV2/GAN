@@ -36,7 +36,8 @@ class Generator(nn.Module):
 def load_model(model, epoch):
     model_dir = os.path.expanduser('~/Documents/GAN/models')
     model_path = f"{model_dir}/generator_epoch_{epoch}.pth"
-    model.load_state_dict(torch.load(model_path, map_location=device))
+    checkpoint = torch.load(model_path, map_location=device)
+    model.load_state_dict(checkpoint['generator_state_dict'])
     model.eval()
     return model
 
@@ -66,7 +67,7 @@ def generate_images(model, num_images=1):
 
 # Load the trained model
 generator_loaded = Generator().to(device)
-generator_loaded = load_model(generator_loaded, epoch=400)  # Adjust epoch number as needed
+generator_loaded = load_model(generator_loaded, epoch=1001)  # Adjust epoch number as needed
 
 # Generate and save one image
 generate_images(generator_loaded, num_images=1)
