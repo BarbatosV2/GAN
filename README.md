@@ -23,6 +23,8 @@ tar -xvf annotation.tar
 ```
 # Read Me
 
+**cuda.py** is to check whether GPU is working or not. There are other way to check as well like ```nvidia-smi``` and ```nvcc --version```.
+
 This GAN model use GPU which save the RAM usage and train data faster than CPU training.
 
 Using RAM makes not only slowdown PC, also crash and makes memory insufficient while in training process.
@@ -38,10 +40,12 @@ The **checkpoint.py** will start from the epoch where you stopped from. For exam
 PS - use **GANV2.py** file to save the train data and use **generator.py** to generate the images using the saved model file
 
 # Initial Result
+**epoch 1**
 
 ![gan_image_1](https://github.com/BarbatosV2/GAN/assets/63419320/d011ad1d-5aba-4906-afd3-916c55fde0a2)
 
 # Final Result
+**epoch 30**
 
 ![gan_image_25740](https://github.com/BarbatosV2/GAN/assets/63419320/76da3070-8d35-4cf4-b2e9-300c030acfe6)
 
