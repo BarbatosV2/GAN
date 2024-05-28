@@ -37,6 +37,10 @@ The **checkpoint.py** will start from the epoch where you stopped from. For exam
 
 **generator.py** will generate the image, fix the epoch number form the code to use the perfect trained model.
 
+**Note**
+
+For continuous training without saving or making checkpoint change to ```utils_nosave``` in **GANV2.py**. For saving checkpoint and model, use ```utils```
+
 PS - use **GANV2.py** file to save the train data and use **generator.py** to generate the images using the saved model file
 
 # Initial Result
