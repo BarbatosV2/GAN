@@ -45,13 +45,13 @@ def train_gan(generator, discriminator, criterion, optimizer_G, optimizer_D, tra
 
             # Train Discriminator
             discriminator.zero_grad()
-            output_real = discriminator(real_images.view(-1, 64 * 64 * 3))
+            output_real = discriminator(real_images)
             loss_real = criterion(output_real, label_real)
             loss_real.backward()
 
             noise = torch.randn(batch_size, 100, device=device)
             fake_images = generator(noise)
-            output_fake = discriminator(fake_images.detach().view(-1, 64 * 64 * 3))
+            output_fake = discriminator(fake_images.detach())
             loss_fake = criterion(output_fake, label_fake)
             loss_fake.backward()
 
@@ -59,7 +59,7 @@ def train_gan(generator, discriminator, criterion, optimizer_G, optimizer_D, tra
 
             # Train Generator
             generator.zero_grad()
-            output = discriminator(fake_images.view(-1, 64 * 64 * 3))
+            output = discriminator(fake_images)
             loss_G = criterion(output, label_real)
             loss_G.backward()
             optimizer_G.step()
@@ -78,3 +78,8 @@ def train_gan(generator, discriminator, criterion, optimizer_G, optimizer_D, tra
         save_images(generator, epoch + 1, device)
         # Save the Generator model
         save_model(generator, discriminator, optimizer_G, optimizer_D, epoch + 1)
+
+        #Save generated images and model every 50 epochs
+        #if (epoch + 1) % 50 == 0:
+        #    save_images(generator, epoch + 1, device)
+        #    save_model(generator, discriminator, optimizer_G, optimizer_D, epoch +1)
