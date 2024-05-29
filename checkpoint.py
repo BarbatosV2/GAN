@@ -4,7 +4,7 @@ import torchvision.datasets as datasets
 import torchvision.transforms as transforms
 from torch.utils.data import DataLoader
 from models import Generator, Discriminator
-from utils import save_model, save_images, train_gan
+from utils_nosave import save_model, save_images, train_gan
 import os
 
 # Check if GPU is available
@@ -54,4 +54,4 @@ else:
     start_epoch = 0
 
 # Train the GAN from the last saved checkpoint
-train_gan(generator, discriminator, criterion, optimizer_G, optimizer_D, train_loader, device, epochs=2000, start_epoch=start_epoch + 1)
+train_gan(generator, discriminator, criterion, optimizer_G, optimizer_D, train_loader, device, epochs=200, start_epoch=start_epoch)
