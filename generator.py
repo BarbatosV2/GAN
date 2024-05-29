@@ -9,28 +9,32 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 # Image parameters
 img_height, img_width = 64, 64
 
-# Define the Generator
+# Define the Generator (same as the one used during training)
 class Generator(nn.Module):
     def __init__(self):
         super(Generator, self).__init__()
-        self.model = nn.Sequential(
-            nn.Linear(100, 256),
-            nn.LeakyReLU(0.2),
-            nn.BatchNorm1d(256),
-            nn.Linear(256, 512),
-            nn.LeakyReLU(0.2),
-            nn.BatchNorm1d(512),
-            nn.Linear(512, 1024),
-            nn.LeakyReLU(0.2),
-            nn.BatchNorm1d(1024),
-            nn.Linear(1024, img_height * img_width * 3),
-            nn.Tanh()
+        self.init_size = 64 // 4
+        self.l1 = nn.Sequential(nn.Linear(100, 128 * self.init_size ** 2))
+
+        self.conv_blocks = nn.Sequential(
+            nn.BatchNorm2d(128),
+            nn.Upsample(scale_factor=2),
+            nn.Conv2d(128, 128, 3, stride=1, padding=1),
+            nn.BatchNorm2d(128, 0.8),
+            nn.LeakyReLU(0.2, inplace=True),
+            nn.Upsample(scale_factor=2),
+            nn.Conv2d(128, 64, 3, stride=1, padding=1),
+            nn.BatchNorm2d(64, 0.8),
+            nn.LeakyReLU(0.2, inplace=True),
+            nn.Conv2d(64, 3, 3, stride=1, padding=1),
+            nn.Tanh(),
         )
 
-    def forward(self, x):
-        x = self.model(x)
-        x = x.view(x.size(0), 3, img_height, img_width)
-        return x
+    def forward(self, z):
+        out = self.l1(z)
+        out = out.view(out.shape[0], 128, self.init_size, self.init_size)
+        img = self.conv_blocks(out)
+        return img
 
 # Function to load the model
 def load_model(model, epoch):
@@ -67,7 +71,7 @@ def generate_images(model, num_images=1):
 
 # Load the trained model
 generator_loaded = Generator().to(device)
-generator_loaded = load_model(generator_loaded, epoch=1001)  # Adjust epoch number as needed
+generator_loaded = load_model(generator_loaded, epoch=200)  # Adjust epoch number as needed
 
 # Generate and save one image
 generate_images(generator_loaded, num_images=1)
