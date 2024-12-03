@@ -53,5 +53,5 @@ PS - use **GANV2.py** file to save the train data and use **generator.py** to ge
 
 ![gan_image_25740](https://github.com/BarbatosV2/GAN/assets/63419320/76da3070-8d35-4cf4-b2e9-300c030acfe6)
 
-Looks like dogs to me XD
+Looks like dogs to me XD (PS, Will change some neural network for more performance and training process)
 
