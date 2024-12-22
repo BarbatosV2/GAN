@@ -14,15 +14,13 @@ cd stanford_dogs
 Depends on what dataset u want to train. For me, I am training dog dataset.
 ```
 wget http://vision.stanford.edu/aditya86/ImageNetDogs/images.tar
-wget http://vision.stanford.edu/aditya86/ImageNetDogs/annotation.tar
 ```
 
-if not working, can directly download at http://vision.stanford.edu/aditya86/ImageNetDogs/ 
+If not working, can directly download at http://vision.stanford.edu/aditya86/ImageNetDogs/ 
 
 # Extract the images
 ```
 tar -xvf images.tar
-tar -xvf annotation.tar
 ```
 # Read Me
 
