@@ -46,6 +46,8 @@ For continuous training without saving or making checkpoint change to ```utils_n
 
 PS - use **GANV2.py** file to save the train data and use **generator.py** to generate the images using the saved model file
 
+** Updated Files is better Neural Network Structure for Unsupervised Learning **
+
 # Initial Result
 **epoch 1**
 
