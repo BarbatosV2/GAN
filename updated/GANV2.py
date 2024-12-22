@@ -7,34 +7,36 @@ from models import Generator, Discriminator
 from utils import save_model, save_images, train_gan
 import os
 
-# Check if GPU is available
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+if __name__ == "__main__":
+    # Check if GPU is available
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-# Path to your dataset
-data_path = 'C:/Users/zawwi/Documents/MachineLearning/GAN-main/stanford_dogs/Images'
+    # Path to your dataset
+    data_path = 'C:/Users/zawwi/Documents/MachineLearning/GAN-main/stanford_dogs/Images'
 
-# Image parameters
-img_height, img_width = 64, 64
-batch_size = 512
+    # Image parameters
+    img_height, img_width = 64, 64
+    batch_size = 512
+    num_workers = 4  # Number of workers for DataLoader
 
-# Data augmentation and normalization for training
-data_transforms = transforms.Compose([
-    transforms.Resize((img_height, img_width)),
-    transforms.ToTensor(),
-    transforms.Normalize(mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5])
-])
+    # Data augmentation and normalization for training
+    data_transforms = transforms.Compose([
+        transforms.Resize((img_height, img_width)),
+        transforms.ToTensor(),
+        transforms.Normalize(mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5])
+    ])
 
-train_data = datasets.ImageFolder(root=data_path, transform=data_transforms)
-train_loader = DataLoader(train_data, batch_size=batch_size, shuffle=True, )
+    train_data = datasets.ImageFolder(root=data_path, transform=data_transforms)
+    train_loader = DataLoader(train_data, batch_size=batch_size, shuffle=True, num_workers=num_workers)
 
-# Initialize Generator and Discriminator
-generator = Generator().to(device)
-discriminator = Discriminator().to(device)
+    # Initialize Generator and Discriminator
+    generator = Generator().to(device)
+    discriminator = Discriminator().to(device)
 
-# Define loss function and optimizers
-criterion = torch.nn.BCELoss()
-optimizer_G = optim.Adam(generator.parameters(), lr=0.0002, betas=(0.5, 0.999))
-optimizer_D = optim.Adam(discriminator.parameters(), lr=0.0002, betas=(0.5, 0.999))
+    # Define loss function and optimizers
+    criterion = torch.nn.BCELoss()
+    optimizer_G = optim.Adam(generator.parameters(), lr=0.0002, betas=(0.5, 0.999))
+    optimizer_D = optim.Adam(discriminator.parameters(), lr=0.0002, betas=(0.5, 0.999))
 
-# Train the GAN
-train_gan(generator, discriminator, criterion, optimizer_G, optimizer_D, train_loader, device, epochs=20, start_epoch=0)
+    # Train the GAN
+    train_gan(generator, discriminator, criterion, optimizer_G, optimizer_D, train_loader, device, epochs=60, start_epoch=0)

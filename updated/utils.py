@@ -2,6 +2,7 @@ import os
 import torch
 import matplotlib.pyplot as plt
 from tqdm import tqdm
+from datetime import datetime
 
 def save_model(generator, discriminator, optimizer_G, optimizer_D, epoch):
     model_dir = 'C:/Users/zawwi/Documents/MachineLearning/GAN-main/models'
@@ -105,12 +106,12 @@ def train_gan(generator, discriminator, criterion, optimizer_G, optimizer_D, tra
         # Save generated images
         save_images(generator, epoch + 1, device)
         # Save the Generator model
-        save_model(generator, discriminator, optimizer_G, optimizer_D, epoch + 1)
+        #save_model(generator, discriminator, optimizer_G, optimizer_D, epoch + 1)
         
         # Save generated images and model every 500 epochs
-        #if (epoch + 1) % 100 == 0:
+        if (epoch + 1) % 10 == 0:
         #    save_images(generator, epoch + 1, device)
-        #    save_model(generator, discriminator, optimizer_G, optimizer_D, epoch + 1)
+            save_model(generator, discriminator, optimizer_G, optimizer_D, epoch + 1)
 
     # Plot training graphs
     plt.figure(figsize=(12, 8))
@@ -134,4 +135,17 @@ def train_gan(generator, discriminator, criterion, optimizer_G, optimizer_D, tra
     plt.legend()
 
     plt.tight_layout()
+    
+    # Save the plot as an image
+    plot_dir = 'C:/Users/zawwi/Documents/MachineLearning/GAN-main/training_plots'
+    if not os.path.exists(plot_dir):
+        os.makedirs(plot_dir)
+    #plt.savefig(f"{plot_dir}/training_plot_epoch_{epochs}.png")
+    
+    # Get current date and time in a formatted string
+    current_time = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+
+    # Save the file with the date and time in the name
+    plt.savefig(f"{plot_dir}/training_plot_{current_time}.png")
+
     plt.show()
